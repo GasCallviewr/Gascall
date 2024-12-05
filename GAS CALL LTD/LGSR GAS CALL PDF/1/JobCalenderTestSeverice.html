@@ -1,0 +1,110 @@
+<html>
+    <head>
+        <title>GasCall > Calander </title>
+        <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/previews/035/157/719/non_2x/blue-comet-and-fireball-emoji-icon-free-png.png">
+    </head>
+            <body>              
+                <ul>
+                    <li><a class="active" href="file:///C:/Users/lucas.johnston/NetworkTestPage.html">Home</a></li>
+                    <li><a href="">Main</a></li>
+                    <li><a href="#contact">Calander</a></li>
+                    <li><a href="#about">Support</a></li> 
+                </ul>
+                <br>
+                <script type="text/javascript" src="https://unpkg.com/@fullcalendar/core@4.1.0/main.min.js"></script>
+                <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/core@4.1.0/main.min.css">
+                <script src="https://unpkg.com/@fullcalendar/core@4.1.0/locales-all.min.js"></script>
+                <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/daygrid@4.1.0/main.min.css">
+                    <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/daygrid/main.min.css">
+                    <link rel="stylesheet" href="https://unpkg.com/@fullcalendar/timegrid/main.min.css">
+                    <script src="https://unpkg.com/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+                    <script src="https://unpkg.com/@fullcalendar/timegrid/main.min.js"></script>
+                    <script src="https://unpkg.com/@fullcalendar/interaction/main.min.js"></script>
+                    <script src="https://unpkg.com/@fullcalendar/timegrid/main.min.js"></script>
+                <div id='calendar'></div>
+
+                </body>
+                    
+                    <style>
+                        ul {
+                        list-style-type: none;
+                        margin: 0;
+                        padding: 0;
+                        overflow: hidden;
+                        border: 1px solid #e7e7e7;
+                        background-color: #f3f3f3;
+                        }
+            
+                        li {
+                        float: left;
+                        }
+            
+                        li a {
+                        display: block;
+                        color: black;
+                        text-align: center;
+                        padding: 14px 16px;
+                        text-decoration: none;
+                        }
+            
+                        li a:hover:not(.active) {
+                        background-color: #ddd;
+                        }
+            
+                        li a.active {
+                        color: black;
+                        background-color: cadetblue
+                        }
+            
+                        container {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+               
+                    </style>
+
+                    <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                    var calendarEl = document.getElementById('calendar');
+
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+                        timeZone: 'UTC',
+                        defaultView: 'dayGridMonth',
+                        header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                        },
+                        editable: true,
+
+                        // JSON FEED INSTRUCTIONS
+                        //
+                        // 1. Open a new browser tab. Go to codepen.io
+                        //
+                        // 2. Create a new pen (Create > New Pen)
+                        //
+                        // 3. Paste your JSON into the JS pane
+                        //
+                        // 4. Hit the "Save" button
+                        //
+                        // 5. The page's URL will change. It will look like this:
+                        //    https://codepen.io/anon/pen/eWPBOx
+                        //
+                        // 6. Append ".js" to it. Will become like this:
+                        //    https://codepen.io/anon/pen/eWPBOx.js
+                        //
+                        // 7. Paste this URL below.
+                        //
+                        eventLimit: true, // allow "more" link when too many events
+                        events: 'https://fullcalendar.io/demo-events.json?overload-day'
+
+                        // 8. Then, enter a date for defaultDate that best displays your events.
+                        //
+                        // defaultDate: 'XXXX-XX-XX'
+                    });
+
+                    calendar.render();
+                    });
+                    </script>

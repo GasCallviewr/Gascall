@@ -1,0 +1,264 @@
+<html>
+    <head>
+        <title>GasCall > Calander </title>
+        <link rel="icon" type="image/x-icon" href="https://static.vecteezy.com/system/resources/previews/035/157/719/non_2x/blue-comet-and-fireball-emoji-icon-free-png.png">
+    </head>
+            <body>              
+                <ul>
+                    <li><a class="active" href="file:///C:/Users/lucas.johnston/Downloads/GAS%20CALL%20LTD/JobCalenderTestSeverice.html">Home</a></li>
+                    
+                </ul>
+
+                   <!-- create a container for the todo list -->
+    <div id="todo-container">
+      <!-- todo list header -->
+      <div id="header">
+        <h1>To Do List</h1>
+      </div>
+
+      <!-- create input box -->
+      <div id="todo-form">
+        <input
+          type="text"
+          class="input-item"
+          name="input_box"
+          id="input-box"
+          placeholder="Add Task"
+        />
+
+        <!-- add button -->
+        <button id="input-button" onclick="addTask()">Add</button>
+      </div>
+
+      <!-- task list -->
+      <h2>Task List</h2>
+      <ul id="list-container"></ul>
+    </div>
+
+    <script type="text/javascript" src="script.js"></script>
+                
+                </body>
+                    
+                    <style>
+
+body {
+    background-color: lightskyblue;
+  }
+  
+  td {
+    text-align: center ;
+  }
+  
+  
+  
+  
+  
+  #myDIV {
+    width: 100%;
+    padding: 50px 0;
+    text-align: left;
+    background-color: white;
+    margin-top: 20px;
+    
+  }
+  
+      
+  
+  .button {
+    background-color: cadetblue;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+  
+      ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          border: 1px solid #e7e7e7;
+          background-color: #f3f3f3;
+          }
+  
+          li {
+          float: left;
+          }
+  
+          li a {
+          display: block;
+          color: black;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+          }
+  
+          li a:hover:not(.active) {
+          background-color: #ddd;
+          }
+  
+          li a.active {
+          color: black;
+          background-color: cadetblue
+          }
+  
+  
+          table {
+    background-color: black;
+    color: white;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    text-decoration: black;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+    color:black;
+  }
+  
+  
+  tr:nth-child(even){background-color: #f2f2f2}
+                    </style>
+                        
+
+  
+                    <script>
+  $(function() {
+    $("#scheduler").kendoScheduler({
+        date: new Date("2013/6/13"),
+        startTime: new Date("2013/6/13 07:00 AM"),
+        height: 600,
+        views: [
+            "day",
+            { type: "workWeek", selected: true },
+            "week",
+            "month",
+            "agenda",
+            { type: "timeline", eventHeight: 50}
+        ],
+        timezone: "Etc/UTC",
+        dataSource: {
+            batch: true,
+            transport: {
+                read: {
+                    url: "//demos.telerik.com/kendo-ui/service/tasks",
+                    dataType: "jsonp"
+                },
+                update: {
+                    url: "//demos.telerik.com/kendo-ui/service/tasks/update",
+                    dataType: "jsonp"
+                },
+                create: {
+                    url: "//demos.telerik.com/kendo-ui/service/tasks/create",
+                    dataType: "jsonp"
+                },
+                destroy: {
+                    url: "//demos.telerik.com/kendo-ui/service/tasks/destroy",
+                    dataType: "jsonp"
+                },
+                parameterMap: function(options, operation) {
+                    if (operation !== "read" && options.models) {
+                        return {models: kendo.stringify(options.models)};
+                    }
+                }
+            },
+            schema: {
+                model: {
+                    id: "taskId",
+                    fields: {
+                        taskId: { 
+                          from: "TaskID", 
+                          type: "number" },
+                        title: { 
+                          from: "Title", 
+                          defaultValue: "No title", 
+                          validation: { 
+                            required: true } },
+                        start: { 
+                          type: "date", 
+                          from: "Start" },
+                        end: { 
+                          type: "date", 
+                          from: "End" },
+                        startTimezone: { 
+                          from: "StartTimezone" },
+                        endTimezone: { 
+                          from: "EndTimezone" },
+                        description: { 
+                          from: "Description" },
+                        recurrenceId: { 
+                          from: "RecurrenceID" },
+                        recurrenceRule: { 
+                          from: "RecurrenceRule" },
+                        recurrenceException: { 
+                          from: "RecurrenceException" },
+                        ownerId: { 
+                          from: "OwnerID", 
+                          defaultValue: 1 },
+                        isAllDay: { 
+                          type: "boolean", 
+                          from: "IsAllDay" }
+                    }
+                }
+            },
+            filter: {
+                logic: "or",
+                filters: [
+                    { field: "ownerId", 
+                     operator: "eq", 
+                     value: 1 },
+                    { field: "ownerId", 
+                     operator: "eq", 
+                     value: 2 }
+                ]
+            }
+        },
+        resources: [
+            {
+                field: "ownerId",
+                title: "Owner",
+                dataSource: [
+                    { text: "Alex", 
+                     value: 1, 
+                     color: "#f8a398" },
+                    { text: "Bob", 
+                     value: 2, 
+                     color: "#51a0ed" },
+                    { text: "Charlie", 
+                     value: 3,
+                     color: "#56ca85" }
+                ]
+            }
+        ]
+    });
+
+    $("#people :checkbox").change(function(e) {
+        var checked = $.map($("#people :checked"), function(checkbox) {
+            return parseInt($(checkbox).val());
+        });
+
+        var scheduler = $("#scheduler").data("kendoScheduler");
+
+        scheduler.dataSource.filter({
+            operator: function(task) {
+                return $.inArray(task.ownerId, checked) >= 0;
+            }
+        });
+    });
+});
+
+                    </script>
